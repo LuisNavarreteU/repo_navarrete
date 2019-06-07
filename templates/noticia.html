@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+
+<div class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display:none" id="leftMenu">
+  <button onclick="closeLeftMenu()" id="Leidas" class="w3-bar-item w3-button w3-large">Leidas &times;</button>
+  {% for noticia in noticias %}
+   <a href="#"  class="w3-bar-item w3-button"><li>{{ noticia["titulo"] }}</li></a>
+  {%endfor%}
+</div>
+
+<div class="w3-sidebar w3-bar-block w3-card w3-animate-right" style="display:none;right:0;" id="rightMenu">
+  <button onclick="closeRightMenu()" id="Leer" class="w3-bar-item w3-button w3-large">Por Leer &times;</button>
+  {% for noticia in noticias%}
+   <a href="/noticia/{{ noticia['codigo'] }}" id="leer" class="w3-bar-item w3-button"><li>{{ noticia["titulo"] }}</li></a>
+  {%endfor%}
+</div>
+
+<div class="w3-teal">
+  <button class="w3-button w3-teal w3-xlarge w3-left" onclick="openLeftMenu()">&#9776;</button>
+  <button class="w3-button w3-teal w3-xlarge w3-right" onclick="openRightMenu()">&#9776;</button>
+  <div id="lead"></div>
+</div>
+
+<div id="cuerpo"></div>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+
+   $("#leer").click(function(){
+      var url = "/noticia/" + $("#codi").val();
+      $.get(url,function(data){
+        if(data != null){
+          $("#lead").html(data["lead"]);
+          $("#cuerpo").html(data["cuerpo"]);
+        }
+      });
+    });
+  
+</script>
+<script>
+function openLeftMenu() {
+  document.getElementById("leftMenu").style.display = "block";
+}
+
+function closeLeftMenu() {
+  document.getElementById("leftMenu").style.display = "none";
+}
+
+function openRightMenu() {
+  document.getElementById("rightMenu").style.display = "block";
+}
+
+function closeRightMenu() {
+  document.getElementById("rightMenu").style.display = "none";
+}
+</script>
+     
+</body>
+</html>
